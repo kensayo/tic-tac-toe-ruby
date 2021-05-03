@@ -48,7 +48,8 @@ sleep 3
 Gem.win_platform? ? (system 'cls') : (system 'clear')
 
 while winner
-
+  9.times do |time|
+        player = time.even? ? $player_one : $player_two
   print_board
   print "\t#{player_one} please type a number from board to play: "
   verify_number(gets.chomp.to_i)
@@ -56,9 +57,18 @@ while winner
   print_board
   print "\t#{player_two} please type a number from board to play: "
   verify_number(gets.chomp.to_i)
-
-  winner = false
-
+  end
+winner = false
 end
 
-puts "\n\n#{player_one} is the winner congrats!"
+def show_winner(player)
+    puts "\nYou win #{player}!!!"
+    print_board
+    puts "\nGame Over."
+  end
+  
+def set_draw
+    puts "\nThe game is draw!"
+    print_board
+    puts "\nGame Over."
+  end
