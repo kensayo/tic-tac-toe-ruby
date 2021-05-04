@@ -1,15 +1,13 @@
 #!/usr/bin/env ruby
-#
-def print_board
-  board = [[1, 2, 3],
-           [4, 5, 6],
-           [7, 8, 9]]
+require_relative '../lib/board'
+
+def print_board(board)
   puts "\n\t\t\t+---+---+---+"
   puts "\t\t\t| #{board[0][0]} | #{board[0][1]} | #{board[0][2]} | "
   puts "\t\t\t+---+---+---+"
   puts "\t\t\t| #{board[1][0]} | #{board[1][1]} | #{board[1][2]} | "
   puts "\t\t\t+---+---+---+"
-  puts "\t\t\t| #{board[2][0]} | #{board[1][1]} | #{board[2][2]} | "
+  puts "\t\t\t| #{board[2][0]} | #{board[2][1]} | #{board[2][2]} | "
   puts "\t\t\t+---+---+---+\n\n"
 end
 
@@ -43,11 +41,12 @@ end
 
 player_one = ''
 player_two = ''
-winner = 1
 cont = 0
 draw = true
 input_1 = []
 input_2 = []
+selection = " "
+selection_2 = " "
 print "\n\n\t\t<------Welcome to Ruby Tic Tac Toe------>\n\n"
 while verify_empty(player_one)
   print "\t\n-> Please enter Player 1 name: "
@@ -58,24 +57,42 @@ while verify_empty(player_two)
   player_two = gets.chomp.capitalize
 end
 
-puts "\n So #{player_one} will play as X and #{player_two} will play as O"
+board = Board.new(player_one, player_two)
+
+puts "\n So #{board.player_one} will play as X and #{board.player_two} will play as O"
 puts "\n Good luck and have fun!...\n\n\n"
+
 sleep 3
+
 clear_scr
 
-while winner.between?(1, 6) || cont < 3
-  print_board
-  print "\t#{player_one} please type a number from board to play: "
-  verify_number(gets.chomp.to_i)
-  print_board
-  print "\t#{player_two} please type a number from board to play: "
-  sel = verify_number(gets.chomp.to_i)
+while cont < 4
+
+  loop do
+    print_board(board.board_game)
+    print "\t#{board.player_one} please type an available number from board to play: "
+    selection = verify_number(gets.chomp.to_i)
+    break if board.replace?(selection, 'X')
+  end
+  input_1 = input_1.push selection
+  p input_1
+  # clear_scr
+  loop do
+    print_board(board.board_game)
+    print "\t#{board.player_two} please type an available number from board to play: "
+    selection_2 = verify_number(gets.chomp.to_i)
+    input_2 = input_2.push selection_2
+    break if board.replace?(selection_2, 'O')
+  end
+  input_2 = input_2.push 
+  p input_2
+  # clear_scr
   winner = rand(15)
   cont += 1
-  if winner > 10 && cont > 3
+  if winner > 10 && cont > 2
     draw = false
     break
   end
 end
 
-show_winner(sel, player_one, player_two, draw)
+show_winner(4, player_one, player_two, draw)
