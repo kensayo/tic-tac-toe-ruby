@@ -1,9 +1,8 @@
 class Player
   attr_reader :player, :game
 
-  def initialize(player, game)
+  def initialize(player)
     @player = player
-    @game = game
     @input_array = []
   end
 

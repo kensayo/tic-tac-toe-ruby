@@ -30,20 +30,32 @@ end
 
 def show_winner(player, game)
   clear_scr
-  puts "\n\tYou win #{player} with #{game}!!!"
+  puts "\n\t#{player} win the game with #{game}! Congrats!"
+end
+
+def move_player(game_board, player, var)
+  input = ''
+  loop do
+    print_board(game_board.board_game)
+    print "\t#{player.player} please type an available number from board to play: "
+    input = verify_number(gets.chomp.to_i)
+    break if game_board.replace?(input, var)
+  end
+  player.add_input input
+  game_board.add_move
 end
 
 player = ['', '']
-draw = true
-sel = ''
 
-#print "\n\n\t\t<------Welcome to Ruby Tic Tac Toe------>\n\n"
+# print "\n\n\t\t<------Welcome to Ruby Tic Tac Toe------>\n\n"
 puts "\n\n\n\t\t████████╗██╗░█████╗░░░░░░░████████╗░█████╗░░█████╗░░░░░░░████████╗░█████╗░███████╗
       \t\t╚══██╔══╝██║██╔══██╗░░░░░░╚══██╔══╝██╔══██╗██╔══██╗░░░░░░╚══██╔══╝██╔══██╗██╔════╝
       \t\t░░░██║░░░██║██║░░╚═╝█████╗░░░██║░░░███████║██║░░╚═╝█████╗░░░██║░░░██║░░██║█████╗░░
       \t\t░░░██║░░░██║██║░░██╗╚════╝░░░██║░░░██╔══██║██║░░██╗╚════╝░░░██║░░░██║░░██║██╔══╝░░
       \t\t░░░██║░░░██║╚█████╔╝░░░░░░░░░██║░░░██║░░██║╚█████╔╝░░░░░░░░░██║░░░╚█████╔╝███████╗
-      \t\t░░░╚═╝░░░╚═╝░╚════╝░░░░░░░░░░╚═╝░░░╚═╝░░╚═╝░╚════╝░░░░░░░░░░╚═╝░░░░╚════╝░╚══════╝\n\n"
+      \t\t░░░╚═╝░░░╚═╝░╚════╝░░░░░░░░░░╚═╝░░░╚═╝░░╚═╝░╚════╝░░░░░░░░░░╚═╝░░░░╚════╝░╚══════╝"
+puts "\t\t\t\t█▄▄ █░█ █ █░░ █▀▄   █ █▄░█   █▀█ █░█ █▄▄ █▄█
+\t\t\t\t█▄█ █▄█ █ █▄▄ █▄▀   █ █░▀█   █▀▄ █▄█ █▄█ ░█░"
 sleep 2
 while verify_empty(player[0])
   print "\t\n-> Please enter Player 1 name: "
@@ -55,8 +67,8 @@ while verify_empty(player[1])
 end
 
 board = Board.new
-player_one = Player.new(player[0], 'X')
-player_two = Player.new(player[1], 'O')
+player_one = Player.new(player[0])
+player_two = Player.new(player[1])
 
 puts "\n So #{player_one.player} will play as X and #{player_two.player} will play as O"
 puts "\n Good luck and have fun!...\n\n\n"
@@ -66,29 +78,24 @@ sleep 3
 clear_scr
 
 loop do
-  loop do
-    print_board(board.board_game)
-    print "\t#{player_one.player} please type an available number from board to play: "
-    sel = verify_number(gets.chomp.to_i)
-    break if board.replace?(sel, 'X')
-  end
-  player_one.add_input sel
+  move_player(board, player_one, 'X')
+
   if board.method_check(player_one.player_input)
     show_winner(player_one.player, player_one.game)
     break
   end
+  break if board.draw?
 
-  # clear_scr
-  loop do
-    print_board(board.board_game)
-    print "\t#{player_two.player} please type an available number from board to play: "
-    sel = verify_number(gets.chomp.to_i)
-    break if board.replace?(sel, 'O')
-  end
-  player_two.add_input sel
+  clear_scr
+
+  move_player(board, player_one, 'O')
   if board.method_check(player_two.player_input)
     show_winner(player_two.player, player_two.game)
     break
   end
-end
 
+  if board.draw?
+    puts "It's a tie!"
+    break
+  end
+end
