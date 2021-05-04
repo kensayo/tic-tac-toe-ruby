@@ -43,10 +43,10 @@ player_one = ''
 player_two = ''
 cont = 0
 draw = true
-input_1 = []
-input_2 = []
-selection = " "
-selection_2 = " "
+input1 = []
+input2 = []
+selection = ' '
+selection2 = ' '
 print "\n\n\t\t<------Welcome to Ruby Tic Tac Toe------>\n\n"
 while verify_empty(player_one)
   print "\t\n-> Please enter Player 1 name: "
@@ -74,18 +74,18 @@ while cont < 4
     selection = verify_number(gets.chomp.to_i)
     break if board.replace?(selection, 'X')
   end
-  input_1 = input_1.push selection
-  p input_1
+  input1.push selection
+  p input1
   # clear_scr
   loop do
     print_board(board.board_game)
     print "\t#{board.player_two} please type an available number from board to play: "
-    selection_2 = verify_number(gets.chomp.to_i)
-    input_2 = input_2.push selection_2
-    break if board.replace?(selection_2, 'O')
+    selection2 = verify_number(gets.chomp.to_i)
+    input2.push selection2
+    break if board.replace?(selection2, 'O')
   end
-  input_2 = input_2.push 
-  p input_2
+  input2.push
+  p input2
   # clear_scr
   winner = rand(15)
   cont += 1
