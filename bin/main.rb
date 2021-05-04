@@ -63,21 +63,23 @@ sleep 3
 
 clear_scr
 
-while cont < 9
+while cont < 4
 
-  print_board(board.board_game)
   loop do
+    print_board(board.board_game)
     print "\t#{board.player_one} please type an available number from board to play: "
     break if board.replace?(verify_number(gets.chomp.to_i), 'X')
   end
-  print_board(board.board_game)
+  clear_scr
   loop do
+    print_board(board.board_game)
     print "\t#{board.player_two} please type an available number from board to play: "
     break if board.replace?(verify_number(gets.chomp.to_i), 'O')
   end
+  clear_scr
   winner = rand(15)
   cont += 1
-  if winner > 10 && cont > 3
+  if winner > 10 && cont > 2
     draw = false
     break
   end
