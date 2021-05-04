@@ -4,13 +4,10 @@ class Board
   include WinningSol
   attr_reader :player_one, :player_two
 
-  def initialize(user_one, user_two)
+  def initialize
     @board = [%w[1 2 3],
               %w[4 5 6],
               %w[7 8 9]]
-    @start_state = %w[1 2 3 4 5 6 7 8 9]
-    @player_one = user_one
-    @player_two = user_two
   end
 
   def board_game
