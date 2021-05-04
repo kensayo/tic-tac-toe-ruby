@@ -45,7 +45,7 @@ cont = 0
 draw = true
 input1 = []
 input2 = []
-selection = ' '
+selection = ''
 selection2 = ' '
 print "\n\n\t\t<------Welcome to Ruby Tic Tac Toe------>\n\n"
 while verify_empty(player_one)
@@ -75,7 +75,7 @@ while cont < 4
     break if board.replace?(selection, 'X')
   end
   input1.push selection
-  p input1
+  break if board.method_check(input1)
   # clear_scr
   loop do
     print_board(board.board_game)
@@ -85,7 +85,8 @@ while cont < 4
     break if board.replace?(selection2, 'O')
   end
   input2.push
-  p input2
+  break if board.method_check(input2)
+
   # clear_scr
   winner = rand(15)
   cont += 1

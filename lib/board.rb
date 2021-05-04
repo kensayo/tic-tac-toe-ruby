@@ -1,4 +1,7 @@
+require_relative '../lib/game_logic'
+
 class Board
+  include WinningSol
   attr_reader :player_one, :player_two
 
   def initialize(user_one, user_two)
