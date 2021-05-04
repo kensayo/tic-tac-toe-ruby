@@ -46,6 +46,8 @@ player_two = ''
 winner = 1
 cont = 0
 draw = true
+input_1 = []
+input_2 = []
 print "\n\n\t\t<------Welcome to Ruby Tic Tac Toe------>\n\n"
 while verify_empty(player_one)
   print "\t\n-> Please enter Player 1 name: "
