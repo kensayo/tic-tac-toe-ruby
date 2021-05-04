@@ -1,4 +1,4 @@
 # .gitignore
 .idea/
 .rubocop.yml
-lib/test.rb
+bin/test.rb

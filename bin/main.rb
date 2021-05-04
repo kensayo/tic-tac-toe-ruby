@@ -7,7 +7,7 @@ def print_board(board)
   puts "\t\t\t+---+---+---+"
   puts "\t\t\t| #{board[1][0]} | #{board[1][1]} | #{board[1][2]} | "
   puts "\t\t\t+---+---+---+"
-  puts "\t\t\t| #{board[2][0]} | #{board[1][1]} | #{board[2][2]} | "
+  puts "\t\t\t| #{board[2][0]} | #{board[2][1]} | #{board[2][2]} | "
   puts "\t\t\t+---+---+---+\n\n"
 end
 
@@ -41,7 +41,6 @@ end
 
 player_one = ''
 player_two = ''
-winner = 1
 cont = 0
 draw = true
 
@@ -61,15 +60,21 @@ puts "\n So #{board.player_one} will play as X and #{board.player_two} will play
 puts "\n Good luck and have fun!...\n\n\n"
 
 sleep 3
+
 clear_scr
 
-while winner.between?(1, 6) || cont < 3
+while cont < 9
+
   print_board(board.board_game)
-  print "\t#{board.player_one} please type a number from board to play: "
-  board.replace(verify_number(gets.chomp.to_i), 'X')
+  loop do
+    print "\t#{board.player_one} please type an available number from board to play: "
+    break if board.replace?(verify_number(gets.chomp.to_i), 'X')
+  end
   print_board(board.board_game)
-  print "\t#{board.player_two} please type a number from board to play: "
-  board.replace(verify_number(gets.chomp.to_i), 'O')
+  loop do
+    print "\t#{board.player_two} please type an available number from board to play: "
+    break if board.replace?(verify_number(gets.chomp.to_i), 'O')
+  end
   winner = rand(15)
   cont += 1
   if winner > 10 && cont > 3
