@@ -1,14 +1,15 @@
 #!/usr/bin/env ruby
 require_relative '../lib/board'
+require_relative '../lib/player'
 
 def print_board(board)
-  puts "\n\t\t\t+---+---+---+"
-  puts "\t\t\t| #{board[0][0]} | #{board[0][1]} | #{board[0][2]} | "
-  puts "\t\t\t+---+---+---+"
-  puts "\t\t\t| #{board[1][0]} | #{board[1][1]} | #{board[1][2]} | "
-  puts "\t\t\t+---+---+---+"
-  puts "\t\t\t| #{board[2][0]} | #{board[2][1]} | #{board[2][2]} | "
-  puts "\t\t\t+---+---+---+\n\n"
+  puts "\n\t\t\t\t+---+---+---+"
+  puts "\t\t\t\t| #{board[0][0]} | #{board[0][1]} | #{board[0][2]} | "
+  puts "\t\t\t\t+---+---+---+"
+  puts "\t\t\t\t| #{board[1][0]} | #{board[1][1]} | #{board[1][2]} | "
+  puts "\t\t\t\t+---+---+---+"
+  puts "\t\t\t\t| #{board[2][0]} | #{board[2][1]} | #{board[2][2]} | "
+  puts "\t\t\t\t+---+---+---+\n\n"
 end
 
 def verify_empty(input)
@@ -27,73 +28,74 @@ def clear_scr
   Gem.win_platform? ? (system 'cls') : (system 'clear')
 end
 
-def show_winner(sel, player1, player2, tie)
+def show_winner(player, game)
   clear_scr
-  if !tie
-    puts "\n\tIt's a Draw!!!"
-  elsif sel > 5
-    puts "\n\tYou win #{player1}!!!"
-  else
-    puts "\n\tYou win #{player2}!!!"
+  puts "\n\t#{player} win the game with #{game}! Congrats!"
+end
+
+def move_player(game_board, player, var)
+  input = ''
+  loop do
+    print_board(game_board.board_game)
+    print "\t#{player.player} please type an available number from board to play: "
+    input = verify_number(gets.chomp.to_i)
+    break if game_board.replace?(input, var)
   end
-  puts "\tGame Over."
+  player.add_input input
+  game_board.add_move
 end
 
-player_one = ''
-player_two = ''
-cont = 0
-draw = true
-input1 = []
-input2 = []
-selection = ''
-selection2 = ' '
-print "\n\n\t\t<------Welcome to Ruby Tic Tac Toe------>\n\n"
-while verify_empty(player_one)
+player = ['', '']
+
+# print "\n\n\t\t<------Welcome to Ruby Tic Tac Toe------>\n\n"
+puts "\n\n\n\t\t████████╗██╗░█████╗░░░░░░░████████╗░█████╗░░█████╗░░░░░░░████████╗░█████╗░███████╗
+      \t\t╚══██╔══╝██║██╔══██╗░░░░░░╚══██╔══╝██╔══██╗██╔══██╗░░░░░░╚══██╔══╝██╔══██╗██╔════╝
+      \t\t░░░██║░░░██║██║░░╚═╝█████╗░░░██║░░░███████║██║░░╚═╝█████╗░░░██║░░░██║░░██║█████╗░░
+      \t\t░░░██║░░░██║██║░░██╗╚════╝░░░██║░░░██╔══██║██║░░██╗╚════╝░░░██║░░░██║░░██║██╔══╝░░
+      \t\t░░░██║░░░██║╚█████╔╝░░░░░░░░░██║░░░██║░░██║╚█████╔╝░░░░░░░░░██║░░░╚█████╔╝███████╗
+      \t\t░░░╚═╝░░░╚═╝░╚════╝░░░░░░░░░░╚═╝░░░╚═╝░░╚═╝░╚════╝░░░░░░░░░░╚═╝░░░░╚════╝░╚══════╝"
+puts "\t\t\t\t█▄▄ █░█ █ █░░ █▀▄   █ █▄░█   █▀█ █░█ █▄▄ █▄█
+\t\t\t\t█▄█ █▄█ █ █▄▄ █▄▀   █ █░▀█   █▀▄ █▄█ █▄█ ░█░"
+sleep 2
+while verify_empty(player[0])
   print "\t\n-> Please enter Player 1 name: "
-  player_one = gets.chomp.capitalize
+  player[0] = gets.chomp.capitalize
 end
-while verify_empty(player_two)
+while verify_empty(player[1])
   print "\t\n-> Please enter Player 2 name: "
-  player_two = gets.chomp.capitalize
+  player[1] = gets.chomp.capitalize
 end
 
-board = Board.new(player_one, player_two)
+board = Board.new
+player_one = Player.new(player[0])
+player_two = Player.new(player[1])
 
-puts "\n So #{board.player_one} will play as X and #{board.player_two} will play as O"
+puts "\n So #{player_one.player} will play as X and #{player_two.player} will play as O"
 puts "\n Good luck and have fun!...\n\n\n"
 
 sleep 3
 
 clear_scr
 
-while cont < 4
+loop do
+  move_player(board, player_one, 'X')
 
-  loop do
-    print_board(board.board_game)
-    print "\t#{board.player_one} please type an available number from board to play: "
-    selection = verify_number(gets.chomp.to_i)
-    break if board.replace?(selection, 'X')
+  if board.method_check(player_one.player_input)
+    show_winner(player_one.player, player_one.game)
+    break
   end
-  input1.push selection
-  break if board.method_check(input1)
-  # clear_scr
-  loop do
-    print_board(board.board_game)
-    print "\t#{board.player_two} please type an available number from board to play: "
-    selection2 = verify_number(gets.chomp.to_i)
-    input2.push selection2
-    break if board.replace?(selection2, 'O')
-  end
-  input2.push
-  break if board.method_check(input2)
+  break if board.draw?
 
-  # clear_scr
-  winner = rand(15)
-  cont += 1
-  if winner > 10 && cont > 2
-    draw = false
+  clear_scr
+
+  move_player(board, player_one, 'O')
+  if board.method_check(player_two.player_input)
+    show_winner(player_two.player, player_two.game)
+    break
+  end
+
+  if board.draw?
+    puts "It's a tie!"
     break
   end
 end
-
-show_winner(4, player_one, player_two, draw)
