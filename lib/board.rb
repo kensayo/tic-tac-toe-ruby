@@ -1,4 +1,4 @@
-require_relative '../lib/ns'
+require_relative '../lib/solutions'
 
 class Board
   include WinningSol
