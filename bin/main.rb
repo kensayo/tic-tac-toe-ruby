@@ -79,7 +79,6 @@ sleep 3
 clear_scr
 
 loop do
-
   clear_scr
 
   move_player(board, player_one, 'X')
@@ -101,5 +100,4 @@ loop do
     show_winner(player_two.player, player_two.game, board)
     break
   end
-
 end
