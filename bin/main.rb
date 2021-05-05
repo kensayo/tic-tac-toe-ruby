@@ -91,10 +91,10 @@ loop do
 
   if board.draw?
     clear_scr
-    puts "\t\t\t <----- Draw Board ----->"
+    puts "\n\n\t\t\t <----- Draw Board ----->"
     print_board(board.board_game)
     puts "\t\t\t -------> It's a tie! <-------"
-    puts "\t\t\t-------> Nobody wins :( <-------"
+    puts "\t\t\t-------> Nobody wins :( <-------\n\n"
     break
   end
 
