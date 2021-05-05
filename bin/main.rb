@@ -28,9 +28,10 @@ def clear_scr
   Gem.win_platform? ? (system 'cls') : (system 'clear')
 end
 
-def show_winner(player, game)
+def show_winner(player, game, _board)
   clear_scr
-  puts "\n\t#{player} win the game with #{game}! Congrats!"
+  puts "\n\t ------> #{player} win the game with #{game}! Congrats!  <------ \n\n"
+  sleep 3
 end
 
 def move_player(game_board, player, var)
@@ -78,24 +79,27 @@ sleep 3
 clear_scr
 
 loop do
-  move_player(board, player_one, 'X')
-
-  if board.method_check(player_one.player_input)
-    show_winner(player_one.player, player_one.game)
-    break
-  end
-  break if board.draw?
 
   clear_scr
 
-  move_player(board, player_one, 'O')
-  if board.method_check(player_two.player_input)
-    show_winner(player_two.player, player_two.game)
+  move_player(board, player_one, 'X')
+  if board.method_check(player_one.player_input)
+    show_winner(player_one.player, player_one.game, board)
     break
   end
 
   if board.draw?
-    puts "It's a tie!"
+    puts "\t\t\t -------> It's a tie! <-------"
+    puts "\t\t\t-------> Nobody wins :( <-------"
     break
   end
+
+  clear_scr
+
+  move_player(board, player_two, 'O')
+  if board.method_check(player_two.player_input)
+    show_winner(player_two.player, player_two.game, board)
+    break
+  end
+
 end
