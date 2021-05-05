@@ -9,7 +9,7 @@ def print_board(board)
   puts "\t\t\t\t| #{board[1][0]} | #{board[1][1]} | #{board[1][2]} | "
   puts "\t\t\t\t+---+---+---+"
   puts "\t\t\t\t| #{board[2][0]} | #{board[2][1]} | #{board[2][2]} | "
-  puts "\t\t\t\t+---+---+---+\n\n"
+  puts "\t\t\t\t+---+---+---+\n"
 end
 
 def verify_empty(input)
@@ -28,9 +28,11 @@ def clear_scr
   Gem.win_platform? ? (system 'cls') : (system 'clear')
 end
 
-def show_winner(player, game, _board)
+def show_winner(player, board)
   clear_scr
-  puts "\n\t ------> #{player} win the game with #{game}! Congrats!  <------ \n\n"
+  puts "\n\n\t\t\t <----- Winner Board ----->"
+  print_board(board)
+  puts "\n\t ------> #{player} win the game! Congrats!  <------ \n\n"
   sleep 3
 end
 
@@ -38,7 +40,7 @@ def move_player(game_board, player, var)
   input = ''
   loop do
     print_board(game_board.board_game)
-    print "\t#{player.player} please type an available number from board to play: "
+    print "\n\t#{player.player} please type an available number from board to play: "
     input = verify_number(gets.chomp.to_i)
     break if game_board.replace?(input, var)
   end
@@ -55,8 +57,8 @@ puts "\n\n\n\t\t████████╗██╗░█████╗░░�
       \t\t░░░██║░░░██║██║░░██╗╚════╝░░░██║░░░██╔══██║██║░░██╗╚════╝░░░██║░░░██║░░██║██╔══╝░░
       \t\t░░░██║░░░██║╚█████╔╝░░░░░░░░░██║░░░██║░░██║╚█████╔╝░░░░░░░░░██║░░░╚█████╔╝███████╗
       \t\t░░░╚═╝░░░╚═╝░╚════╝░░░░░░░░░░╚═╝░░░╚═╝░░╚═╝░╚════╝░░░░░░░░░░╚═╝░░░░╚════╝░╚══════╝"
-puts "\t\t\t\t█▄▄ █░█ █ █░░ █▀▄   █ █▄░█   █▀█ █░█ █▄▄ █▄█
-\t\t\t\t█▄█ █▄█ █ █▄▄ █▄▀   █ █░▀█   █▀▄ █▄█ █▄█ ░█░"
+puts "\t\t\t█▄▄ █░█ █ █░░ ▀█▀   █░█░█ █ ▀█▀ █░█   █▀█ █░█ █▄▄ █▄█
+\t\t\t█▄█ █▄█ █ █▄▄ ░█░   ▀▄▀▄▀ █ ░█░ █▀█   █▀▄ █▄█ █▄█ ░█░"
 sleep 2
 while verify_empty(player[0])
   print "\t\n-> Please enter Player 1 name: "
@@ -83,11 +85,14 @@ loop do
 
   move_player(board, player_one, 'X')
   if board.method_check(player_one.player_input)
-    show_winner(player_one.player, player_one.game, board)
+    show_winner(player_one.player, board.board_game)
     break
   end
 
   if board.draw?
+    clear_scr
+    puts "\t\t\t <----- Draw Board ----->"
+    print_board(board.board_game)
     puts "\t\t\t -------> It's a tie! <-------"
     puts "\t\t\t-------> Nobody wins :( <-------"
     break
@@ -97,7 +102,7 @@ loop do
 
   move_player(board, player_two, 'O')
   if board.method_check(player_two.player_input)
-    show_winner(player_two.player, player_two.game, board)
+    show_winner(player_two.player, board.board_game)
     break
   end
 end
