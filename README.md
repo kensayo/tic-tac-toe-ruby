@@ -4,7 +4,8 @@
 
 # Project - Tic Tac Toe
 
-> One paragraph statement about the project.
+> This project is to validate that we have acquired knowledge of the Ruby programming language specifically OOP. With the skills achieved, they permits us to develop a Video Game development project called Tic Tac Toe. 
+Building this project helps to show that we have achieved or learned the correct operation of Object Oriented Programming.
 
 ![screenshot](./app_screenshot.png)
 
@@ -12,7 +13,8 @@ Additional description about the project and its features.
 
 ## Built With
 
-- Ruby
+- ![](<https://img.shields.io/badge/-Ruby-rgb(199%2C%2032%2C%2039)?style=plastic&logo=ruby>)
+
 
 ## Live Demo
 
