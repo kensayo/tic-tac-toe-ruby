@@ -2,7 +2,6 @@ require_relative '../lib/solutions'
 
 class Board
   include WinningSol
-  attr_writer :number_moves
 
   def initialize
     @board = [%w[1 2 3],
@@ -20,21 +19,22 @@ class Board
     return false if available?(number)
 
     @board = @board.map { |arr| arr.map { |item| item == number ? var : item } }
+    @number_moves += 1
     true
   end
+
+  def draw?
+    return true if @number_moves == 9
+
+    false
+  end
+
+  private
 
   def available?(number)
     @board.each do |arr|
       return false if arr.any? { |item| item == number }
     end
     true
-  end
-
-  def add_move
-    @number_moves += 1
-  end
-
-  def draw?
-    true if @number_moves == 9
   end
 end
