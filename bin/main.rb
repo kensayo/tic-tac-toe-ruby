@@ -45,64 +45,67 @@ def move_player(game_board, player, var)
     break if game_board.replace?(input, var)
   end
   player.add_input input
-  game_board.add_move
 end
 
-player = ['', '']
+if __FILE__ == $PROGRAM_NAME
 
-# print "\n\n\t\t<------Welcome to Ruby Tic Tac Toe------>\n\n"
-puts "\n\n\n\t\t████████╗██╗░█████╗░░░░░░░████████╗░█████╗░░█████╗░░░░░░░████████╗░█████╗░███████╗
+  player = ['', '']
+
+  # print "\n\n\t\t<------Welcome to Ruby Tic Tac Toe------>\n\n"
+  puts "\n\n\n\t\t████████╗██╗░█████╗░░░░░░░████████╗░█████╗░░█████╗░░░░░░░████████╗░█████╗░███████╗
       \t\t╚══██╔══╝██║██╔══██╗░░░░░░╚══██╔══╝██╔══██╗██╔══██╗░░░░░░╚══██╔══╝██╔══██╗██╔════╝
       \t\t░░░██║░░░██║██║░░╚═╝█████╗░░░██║░░░███████║██║░░╚═╝█████╗░░░██║░░░██║░░██║█████╗░░
       \t\t░░░██║░░░██║██║░░██╗╚════╝░░░██║░░░██╔══██║██║░░██╗╚════╝░░░██║░░░██║░░██║██╔══╝░░
       \t\t░░░██║░░░██║╚█████╔╝░░░░░░░░░██║░░░██║░░██║╚█████╔╝░░░░░░░░░██║░░░╚█████╔╝███████╗
       \t\t░░░╚═╝░░░╚═╝░╚════╝░░░░░░░░░░╚═╝░░░╚═╝░░╚═╝░╚════╝░░░░░░░░░░╚═╝░░░░╚════╝░╚══════╝"
-puts "\t\t\t█▄▄ █░█ █ █░░ ▀█▀   █░█░█ █ ▀█▀ █░█   █▀█ █░█ █▄▄ █▄█
+  puts "\t\t\t█▄▄ █░█ █ █░░ ▀█▀   █░█░█ █ ▀█▀ █░█   █▀█ █░█ █▄▄ █▄█
 \t\t\t█▄█ █▄█ █ █▄▄ ░█░   ▀▄▀▄▀ █ ░█░ █▀█   █▀▄ █▄█ █▄█ ░█░"
-sleep 2
-while verify_empty(player[0])
-  print "\t\n-> Please enter Player 1 name: "
-  player[0] = gets.chomp.capitalize
-end
-while verify_empty(player[1])
-  print "\t\n-> Please enter Player 2 name: "
-  player[1] = gets.chomp.capitalize
-end
-
-board = Board.new
-player_one = Player.new(player[0])
-player_two = Player.new(player[1])
-
-puts "\n So #{player_one.player} will play as X and #{player_two.player} will play as O"
-puts "\n Good luck and have fun!...\n\n\n"
-
-sleep 3
-
-clear_scr
-
-loop do
-  clear_scr
-
-  move_player(board, player_one, 'X')
-  if board.method_check(player_one.player_input)
-    show_winner(player_one.player, board.board_game)
-    break
+  sleep 2
+  while verify_empty(player[0])
+    print "\t\n-> Please enter Player 1 name: "
+    player[0] = gets.chomp.capitalize
+  end
+  while verify_empty(player[1])
+    print "\t\n-> Please enter Player 2 name: "
+    player[1] = gets.chomp.capitalize
   end
 
-  if board.draw?
+  board = Board.new
+  player_one = Player.new(player[0])
+  player_two = Player.new(player[1])
+
+  puts "\n So #{player_one.player} will play as X and #{player_two.player} will play as O"
+  puts "\n Good luck and have fun!...\n\n\n"
+
+  sleep 3
+
+  clear_scr
+
+  loop do
     clear_scr
-    puts "\n\n\t\t\t <----- Draw Board ----->"
-    print_board(board.board_game)
-    puts "\t\t\t -------> It's a tie! <-------"
-    puts "\t\t\t-------> Nobody wins :( <-------\n\n"
-    break
+
+    move_player(board, player_one, 'X')
+    if board.method_check(player_one.player_input)
+      show_winner(player_one.player, board.board_game)
+      break
+    end
+
+    if board.draw?
+      clear_scr
+      puts "\n\n\t\t\t <----- Draw Board ----->"
+      print_board(board.board_game)
+      puts "\t\t\t -------> It's a tie! <-------"
+      puts "\t\t\t-------> Nobody wins :( <-------\n\n"
+      break
+    end
+
+    clear_scr
+
+    move_player(board, player_two, 'O')
+    if board.method_check(player_two.player_input)
+      show_winner(player_two.player, board.board_game)
+      break
+    end
   end
 
-  clear_scr
-
-  move_player(board, player_two, 'O')
-  if board.method_check(player_two.player_input)
-    show_winner(player_two.player, board.board_game)
-    break
-  end
 end
